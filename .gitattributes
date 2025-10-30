@@ -1,3 +1,4 @@
+fna filter=lfs diff=lfs merge=lfs -text
 *.fna filter=lfs diff=lfs merge=lfs -text
 *.fa filter=lfs diff=lfs merge=lfs -text
 *.fasta filter=lfs diff=lfs merge=lfs -text
