@@ -9,7 +9,20 @@ import seaborn as sns
 import numpy as np
 
 def run_deepvirfinder(input_fasta, output_dir, dvf_script, model_dir, cutoff_len, core_num):
+    import re
+    input_fasta = os.path.normpath(os.path.abspath(os.path.expanduser(re.sub(r'/+', '/', input_fasta))))
+    output_dir = os.path.normpath(os.path.abspath(os.path.expanduser(output_dir)))
+    model_dir = os.path.normpath(os.path.abspath(os.path.expanduser(model_dir)))
+    
     output_pred = os.path.join(output_dir, os.path.basename(input_fasta) + f'_gt{cutoff_len}bp_dvfpred.txt')
+    
+    if not os.path.exists(input_fasta):
+        raise FileNotFoundError(f"Input file not found: {input_fasta}")
+    if not os.path.exists(model_dir):
+        raise FileNotFoundError(f"Model directory not found: {model_dir}")
+    
+    os.makedirs(output_dir, exist_ok=True)
+    
     cmd = [
         sys.executable, dvf_script,
         '-i', input_fasta,
@@ -19,7 +32,25 @@ def run_deepvirfinder(input_fasta, output_dir, dvf_script, model_dir, cutoff_len
         '-c', str(core_num)
     ]
     print(f"[Step 1] Run DeepVirFinder: {' '.join(cmd)}")
-    subprocess.run(cmd, check=True)
+    
+    try:
+        result = subprocess.run(
+            cmd, 
+            check=True,
+            capture_output=True,
+            text=True,
+            encoding='utf-8'
+        )
+        if result.stdout:
+            print(result.stdout)
+    except subprocess.CalledProcessError as e:
+        print(f"Error: dvf.py execution failed with exit code: {e.returncode}")
+        if e.stdout:
+            print(f"Stdout:\n{e.stdout}")
+        if e.stderr:
+            print(f"Stderr:\n{e.stderr}")
+        raise
+    
     return output_pred
 
 def filter_sequences(pred_file, fasta_file, output_dir, score_thres, p_thres):
@@ -30,7 +61,6 @@ def filter_sequences(pred_file, fasta_file, output_dir, score_thres, p_thres):
     filtered = pred[(pred['score'] > score_thres) & (pred['pvalue'] < p_thres)]
     ids = set(filtered['id'])
 
-    # Statistics
     n_total = pred.shape[0]
     n_pass = len(ids)
     n_fail = n_total - n_pass
@@ -45,7 +75,6 @@ def filter_sequences(pred_file, fasta_file, output_dir, score_thres, p_thres):
         for i in ids:
             f.write(i + '\n')
 
-    # Write filtered fasta
     with open(output_fasta, 'w') as out_f:
         for record in SeqIO.parse(fasta_file, 'fasta'):
             if record.id in ids:
@@ -61,7 +90,6 @@ def plot_results(pred_file, filtered_ids_file, output_dir, n_pass, n_fail, perce
 
     plt.figure(figsize=(14, 10))
 
-    # 1. Score distribution
     plt.subplot(2, 2, 1)
     bins = np.linspace(df['score'].min(), df['score'].max(), 30)
     plt.hist(df['score'], bins=bins, color='lightgray', edgecolor='black', alpha=0.7, label='All scores')
@@ -74,7 +102,6 @@ def plot_results(pred_file, filtered_ids_file, output_dir, n_pass, n_fail, perce
     plt.ylabel('Count')
     plt.legend(loc='upper left', bbox_to_anchor=(0.5, 1))
 
-    # 2. p-value distribution
     plt.subplot(2, 2, 2)
     bins_p = np.linspace(df['pvalue'].min(), df['pvalue'].max(), 30)
     plt.hist(df['pvalue'], bins=bins_p, color='orange', edgecolor='black', alpha=0.7, label='All p-values')
@@ -85,7 +112,6 @@ def plot_results(pred_file, filtered_ids_file, output_dir, n_pass, n_fail, perce
     plt.ylabel('Count')
     plt.legend()
 
-    # 3. Pie chart: Passed vs Not passed
     plt.subplot(2, 2, 3)
     sizes = [n_pass, n_fail]
     labels = [f'Passed ({percent:.1f}%)', 'Not passed']
@@ -102,7 +128,6 @@ def plot_results(pred_file, filtered_ids_file, output_dir, n_pass, n_fail, perce
     plt.title('Proportion of Passed vs Not Passed', fontsize=14)
     plt.gca().set_aspect('equal')
 
-    # 4. Joint distribution: 2D KDE plot
     plt.subplot(2, 2, 4)
     sns.kdeplot(
         x=df['score'], y=df['pvalue'],
