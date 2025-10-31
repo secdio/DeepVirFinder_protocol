@@ -1,2 +1,0 @@
-name	len	score	pvalue
-gi|674660337|ref|NC_024711.1| Uncultured phage crAssphage, complete genome	97065	0.99997073411941528	0.0000000000000000
