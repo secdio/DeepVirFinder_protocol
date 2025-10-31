@@ -233,7 +233,11 @@ model = SiameseModel(filter_len1, nb_filter1, nb_dense).to(device)
 
 if os.path.isfile(modName):
     try:
-        model.load_state_dict(torch.load(modName, map_location=device))
+        checkpoint = torch.load(modName, map_location=device, weights_only=False)
+        if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
+            model.load_state_dict(checkpoint['model_state_dict'])
+        else:
+            model.load_state_dict(checkpoint)
         print("...model exists...")
     except Exception as e:
         print("Warning: failed to load existing model, will train new one:", e)
