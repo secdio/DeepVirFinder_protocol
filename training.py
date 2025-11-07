@@ -1,13 +1,3 @@
-#!/usr/bin/env python
-# title             :training_pytorch.py
-# description       :Training deep learning for distinguishing viruses from hosts (PyTorch version)
-# author            :Assistant (adapted to match original script outputs)
-# date              :20251029
-# version           :1.4
-# usage             :python training_pytorch.py -l 1000 -i ./train_example/tr/encode -j ./train_example/val/encode -o ./train_example/models -f 10 -n 1000 -d 1000 -e 50
-# required packages :numpy, torch, scikit-learn
-#==============================================================================
-
 import numpy as np
 import os
 import sys
@@ -94,6 +84,7 @@ class SiameseModel(nn.Module):
         # x shape: (batch, seq_len, channel_num)
         x = x.permute(0, 2, 1)  # -> (batch, channel_num, seq_len)
         x = self.conv1d(x)
+        x = torch.relu(x)  # ReLU activation as in original Keras Conv1D(activation='relu')
         x = self.global_max_pool(x).squeeze(-1)  # -> (batch, nb_filter1)
         x = self.dropout_pool(x)
         x = torch.relu(self.dense1(x))
@@ -233,11 +224,7 @@ model = SiameseModel(filter_len1, nb_filter1, nb_dense).to(device)
 
 if os.path.isfile(modName):
     try:
-        checkpoint = torch.load(modName, map_location=device, weights_only=False)
-        if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
-            model.load_state_dict(checkpoint['model_state_dict'])
-        else:
-            model.load_state_dict(checkpoint)
+        model.load_state_dict(torch.load(modName, map_location=device, weights_only=False))
         print("...model exists...")
     except Exception as e:
         print("Warning: failed to load existing model, will train new one:", e)
@@ -247,13 +234,14 @@ criterion = nn.BCELoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # ---------------------------
-# Training loop with checkpoint (save best by val_loss) and early stopping (monitor val_loss)
+# Training loop with checkpoint (save best by val_acc) and early stopping (monitor val_acc)
 # ---------------------------
 print("...fitting model...")
 print(contigLengthk + 'k_fl' + str(filter_len1) + '_fn' + str(nb_filter1) + '_dn' + str(nb_dense) + '_ep' + str(epochs))
 
-best_val_loss = np.inf
+best_val_acc = -np.inf
 patience = 5
+min_delta = 0.0001
 no_improve_epochs = 0
 
 for epoch in range(epochs):
@@ -273,11 +261,12 @@ for epoch in range(epochs):
         n_batches += 1
     avg_loss = epoch_loss / (n_batches if n_batches > 0 else 1)
 
-    # compute validation loss and AUC
+    # compute validation loss, accuracy and AUC
     model.eval()
     y_trues = []
     y_scores = []
     val_loss_accum = 0.0
+    val_correct = 0
     val_samples = 0
     with torch.no_grad():
         for Xfw_batch, Xbw_batch, Y_batch in val_loader:
@@ -288,13 +277,18 @@ for epoch in range(epochs):
             # loss for this batch (sum over batch)
             batch_loss = criterion(outputs, Y_batch).item()
             val_loss_accum += batch_loss * Xfw_batch.shape[0]  # multiply by batch size to accumulate per-sample
+            # accuracy: compare predictions (outputs > 0.5) with true labels
+            predictions = (outputs > 0.5).float()
+            val_correct += (predictions == Y_batch).float().sum().item()
             val_samples += Xfw_batch.shape[0]
             y_scores.append(outputs.cpu().numpy().ravel())
             y_trues.append(Y_batch.cpu().numpy().ravel())
     if val_samples > 0:
         val_loss = val_loss_accum / val_samples
+        val_acc = val_correct / val_samples
     else:
         val_loss = float('nan')
+        val_acc = float('nan')
 
     # compute val auc for logging
     if len(y_scores) > 0:
@@ -307,13 +301,13 @@ for epoch in range(epochs):
     else:
         val_auc = float('nan')
 
-    # print epoch summary (train loss and val loss/auc)
-    print(f"Epoch {epoch+1}/{epochs} - train_loss: {avg_loss:.6f}  val_loss: {val_loss:.6f}  val_auc: {val_auc:.6f}")
+    # print epoch summary (train loss and val loss/acc/auc)
+    print(f"Epoch {epoch+1}/{epochs} - train_loss: {avg_loss:.6f}  val_loss: {val_loss:.6f}  val_acc: {val_acc:.6f}  val_auc: {val_auc:.6f}")
 
-    # checkpoint logic: save best by val_loss (smaller is better) -- matches Keras default
-    if np.isfinite(val_loss) and val_loss < best_val_loss:
-        prev = best_val_loss if np.isfinite(best_val_loss) else float('nan')
-        best_val_loss = val_loss
+    # checkpoint logic: save best by val_acc (larger is better) -- matches Keras early stopping
+    if np.isfinite(val_acc) and val_acc > best_val_acc + min_delta:
+        prev = best_val_acc if np.isfinite(best_val_acc) else float('nan')
+        best_val_acc = val_acc
         no_improve_epochs = 0
         torch.save({
             'model_state_dict': model.state_dict(),
@@ -321,13 +315,12 @@ for epoch in range(epochs):
             'epoch': epoch
         }, modName)
 
-        print(f"Epoch {epoch+1}: val_loss improved from {prev:.6f} to {val_loss:.6f}, saving model to {modName}")
+        print(f"Epoch {epoch+1}: val_acc improved from {prev:.6f} to {val_acc:.6f}, saving model to {modName}")
     else:
         no_improve_epochs += 1
 
-    # early stopping based on val_loss (matches the checkpoint metric)
+    # early stopping based on val_acc (matches Keras EarlyStopping with monitor='val_acc')
     if no_improve_epochs >= patience:
-        print(f"Early stopping: no improvement in val_loss for {patience} epochs.")
         break
 
 # ---------------------------
@@ -336,7 +329,11 @@ for epoch in range(epochs):
 # load best model if saved
 if os.path.isfile(modName):
     try:
-        model.load_state_dict(torch.load(modName, map_location=device))
+        checkpoint = torch.load(modName, map_location=device, weights_only=False)
+        if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
+            model.load_state_dict(checkpoint['model_state_dict'])
+        else:
+            model.load_state_dict(checkpoint)
         print("Loaded best model from disk for final evaluation.")
     except Exception:
         pass
