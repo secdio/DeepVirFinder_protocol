@@ -2,7 +2,7 @@
 
 Version: 1.2
 
-Authors: Yuqian Mo, Nathan Ahlgren, Jed A. Fuhrman, Fengzhu Sun, Shengwei Hou1
+Authors: Yuqian Mo, Nathan Ahlgren, Jed A. Fuhrman, Fengzhu Sun, Shengwei Hou
 
 Maintainer: Yuqian Mo, Jie Ren renj@usc.edu, Chao Deng chaodeng@usc.edu
 
