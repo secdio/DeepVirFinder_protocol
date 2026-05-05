@@ -167,13 +167,13 @@ test has passed.
 
 <!-- -->
 
-1)  Sequence identifier
+\(1\) Sequence identifier
 
-2)  Sequence length
+\(2\) Sequence length
 
-3)  Predicted viral score (0-1)
+\(3\)  Predicted viral score (0-1)
 
-4)  Calculated *p*-value (0-1)
+\(4\)  Calculated *p*-value (0-1)
 
 5.  (Optional) To enhance the statistical rigor of viral sequence
     identification, we recommend calculating *q*-values for false
@@ -283,17 +283,17 @@ files while maintaining the required input format (FASTA).
 
 <!-- -->
 
-1)  Input fasta files
+\(1\)  Input fasta files
 
-2)  Output directory
+\(2\) Output directory
 
-3)  Cutoff length
+\(3\) Cutoff length
 
-4)  Number of cores
+\(4\)  Number of cores
 
-5)  Threshold of scores
+\(5\) Threshold of scores
 
-6)  Threshold of *p*-values
+\(6\) Threshold of *p*-values
 
 > \$ python pipeline.py -i ./test/TOV_43_sampled_80M.fna -o ./test/TOV
 > -l 1500 -c 16 --score 0.9 --pvalue 0.05
@@ -303,13 +303,13 @@ files while maintaining the required input format (FASTA).
 
 <!-- -->
 
-1)  Prediction Results from dvf.py
+\(1\) Prediction Results from dvf.py
 
-2)  Filtered Viral Sequences
+\(2\)  Filtered Viral Sequences
 
-3)  Viral Sequence IDs
+\(3\)  Viral Sequence IDs
 
-4)  Visualization Outputs
+\(4\) Visualization Outputs
 
 **<span class="mark">Basic Protocol 3：RETRAINING THE DeepVirFinder
 MODEL USING A CUSTOMIZED DATASET</span>**
