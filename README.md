@@ -26,6 +26,10 @@ Authors: Jie Ren, Kai Song, Chao Deng, Nathan Ahlgren, Jed Fuhrman, Yi Li, Xiaoh
 
 This program is available under the terms of USC-RL v1.0. 
 
+
+**<span class="mark">Basic Protocol 1: PREDICTING VIRAL SEQUENCES IN
+METAGENOMIC ASSEMBLIES</span>**
+
 Commercial users should contact Dr. Sun at fsun@usc.edu, copyright at the University of Southern California.
 
 <!--You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.-->
