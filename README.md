@@ -32,10 +32,8 @@ Commercial users should contact Dr. Sun at fsun@usc.edu, copyright at the Univer
 
 
 
-  
 
-
-
+-----------------------------------
 
 **<span class="mark">Basic Protocol 1: PREDICTING VIRAL SEQUENCES IN
 METAGENOMIC ASSEMBLIES</span>**
