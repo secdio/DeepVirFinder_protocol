@@ -26,7 +26,7 @@ Authors: Jie Ren, Kai Song, Chao Deng, Nathan Ahlgren, Jed Fuhrman, Yi Li, Xiaoh
 
 This program is available under the terms of USC-RL v1.0. 
 
-Commercial users should contact Dr. Sun at fsun@usc.edu, copyright at the University of Southern California.
+Commercial users should contact Dr. Sun at fsun@usc.edu, copyright at the University of Southern California.  
 
 
 
