@@ -214,13 +214,13 @@ test has passed.
     allows users to extract sequences identified as viral by
     DeepVirFinder based on user-defined score and *p*-value thresholds.
 
-> To run the script, the user needs to provide the DeepVirFinder output
-> file, the original metagenomic FASTA file, and the desired filtering
-> thresholds for the score and *p*-value fields. The script will then
-> extract sequences that meet the specified criteria, such as a score
-> ＞0.9 and a p-value ＜0.05, and generate a filtered FASTA file
-> containing only those sequences predicted to be viral.
->
+To run the script, the user needs to provide the DeepVirFinder output
+file, the original metagenomic FASTA file, and the desired filtering
+thresholds for the score and *p*-value fields. The script will then
+extract sequences that meet the specified criteria, such as a score
+＞0.9 and a p-value ＜0.05, and generate a filtered FASTA file
+containing only those sequences predicted to be viral.
+
 > \$ python extract_virus.py -j ./test/CRC_meta.fa_gt300bp_dvfpred.txt
 > \\
 >
@@ -341,18 +341,18 @@ DeepVirFinder and dependencies as specified in Basic Protocol 1.
 
 1.  Running encode.py to encode the input files.
 
-> This script is designed to segment input genomic sequences into
-> fixed-length fragments and perform one-hot encoding for each fragment.
-> The encoding results are separated into forward and reverse strands
-> and are output as .npy files and .fasta files. The script encode.py
-> processes the input genomic sequences by fragmenting them into
-> fixed-length sequences \[-l\] and encoding them using the one-hot
-> encoding scheme. The contig type \[-p\] indicates the type of the
-> sequences, either virus or host. This indicator will be encoded into
-> the file name and will be used in the following steps for data type
-> recognition. Users can use the following command to encode viral and
-> host genome files separately:
->
+This script is designed to segment input genomic sequences into
+fixed-length fragments and perform one-hot encoding for each fragment.
+The encoding results are separated into forward and reverse strands
+and are output as .npy files and .fasta files. The script encode.py
+processes the input genomic sequences by fragmenting them into
+fixed-length sequences \[-l\] and encoding them using the one-hot
+encoding scheme. The contig type \[-p\] indicates the type of the
+sequences, either virus or host. This indicator will be encoded into
+the file name and will be used in the following steps for data type
+recognition. Users can use the following command to encode viral and
+host genome files separately:
+
 > \# for training
 >
 > \$ python encode.py -i ./train_example/tr/host_tr.fa -l 150 -p host
@@ -381,21 +381,21 @@ DeepVirFinder and dependencies as specified in Basic Protocol 1.
 3.  Running training.py to train the new model with encoded custom
     datasets
 
-> The script training.py takes the encoded sequences and trains a deep
-> learning model for classifying viruses from hosts. We strongly
-> recommend using a GPU for this step; otherwise, the runtime may be
-> significantly prolonged.
->
-> The directory of the encoded training data \[-i\] and the directory of
-> the encoded validation data \[-j\] need to be specified.
-> Hyperparameters of the deep learning model include the number of
-> filters in the convolutional layer \[-n\], the length of the filter
-> \[-f\], and the number of neurons in the dense layer \[-d\]. Since
-> viral sequences in real data can be of various lengths, we train
-> multiple models using sequences of different lengths, e.g., 150, 300,
-> 500, 1000 bp, for predicting sequences of different length ranges. The
-> option \[-l\] specifies the length of the sequences used for training.
->
+The script training.py takes the encoded sequences and trains a deep
+learning model for classifying viruses from hosts. We strongly
+recommend using a GPU for this step; otherwise, the runtime may be
+significantly prolonged.
+
+The directory of the encoded training data \[-i\] and the directory of
+the encoded validation data \[-j\] need to be specified.
+Hyperparameters of the deep learning model include the number of
+filters in the convolutional layer \[-n\], the length of the filter
+\[-f\], and the number of neurons in the dense layer \[-d\]. Since
+viral sequences in real data can be of various lengths, we train
+multiple models using sequences of different lengths, e.g., 150, 300,
+500, 1000 bp, for predicting sequences of different length ranges. The
+option \[-l\] specifies the length of the sequences used for training.
+
 > \$ python training.py -l 150 -i ./train_example/tr/encoded \\
 >
 > -j ./train_example/val/encoded -o ./train_example/test_models \\
@@ -469,12 +469,13 @@ DeepVirFinder and dependencies as specified in Basic Protocol 1.
 > Model (best) is at
 > ./train_example/models/model_siamese_varlen_0.15k_fl10_fn500_dn500.pth
 >
-> The following section demonstrates a complete test workflow. If you
-> need to train your own model, you should first divide the sequence
-> into fixed lengths in base pairs (such as 150, 300, 500, 1000, etc.)
-> and then train the model. We strongly recommend using a GPU-equipped
-> machine for training.
->
+The following section demonstrates a complete test workflow. If you
+need to train your own model, you should first divide the sequence
+into fixed lengths in base pairs (such as 150, 300, 500, 1000, etc.)
+and then train the model. We strongly recommend using a GPU-equipped
+machine for training.
+
+
 > \# Fragmenting sequences into fixed lengths, and encoding them using
 > one-hot encoding (may take about 5 minutes)
 >
@@ -510,8 +511,8 @@ DeepVirFinder and dependencies as specified in Basic Protocol 1.
 
 4.  Using the new model to predict your metagenomic files.
 
-> To predict sequences using the newly trained model, specify the model
-> directory using the option -m,
+To predict sequences using the newly trained model, specify the model
+directory using the option -m,
 >
 > python dvf.py -i ./test/crAssphage.fa -o ./train_example/test \\
 >
