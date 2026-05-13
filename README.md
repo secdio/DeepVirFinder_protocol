@@ -87,7 +87,7 @@ format.
     completion, the following message should be displayed on the screen,
     indicating that DeepVirFinder has been installed correctly and the
     test has passed.
->
+
 > python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
 >
 > Using CPU/GPU: running on CPU
@@ -164,8 +164,6 @@ format.
     output directory. The primary output file is a text file (.txt)
     structured as described in Table 3, containing the following fields:
 
-<!-- -->
-
     \(1\) Sequence identifier
 
     \(2\) Sequence length
@@ -179,8 +177,6 @@ format.
     discovery rate (FDR) control as a more conservative metric than
     *p*-values. Users can compute *q*-values using the R package as
     follows:
-
-<!-- -->
 
     \(1\)  To install the package "qvalue" in R:
 
@@ -362,7 +358,7 @@ host genome files separately:
 > \$ python encode.py -i ./train_example/val/virus_val.fa -l 150 -p
 > virus
 
-     Part of the output is as follows,
+    Part of the output is as follows,
 
 > Encoded sequences are saved in:
 >
