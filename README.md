@@ -67,9 +67,10 @@ format.
 1.  We recommend installing DeepVirFinder by cloning the source code
     from the GitHub repository:
 
-> \$ git clone https://github.com/secdio/DeepVirFinder_protocol.git
->
-> \$ cd DeepVirFinder_protocol/
+    ```bash
+    $ git clone https://github.com/secdio/DeepVirFinder_protocol.git
+    $ cd DeepVirFinder_protocol/
+    ```
 
 2.  Users can create a Miniconda/Conda environment for running
     DeepVirFinder based on the provided dvf_protocol.yml configuration
@@ -77,71 +78,73 @@ format.
     installation test using the sample data to demonstrate the standard
     running command:
 
-> \$ conda env create -f dvf_protocol.yml -n dvf_protocol
->
-> \$ conda activate dvf_protocol
->
-> \$ python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
+    ```bash
+    $ conda env create -f dvf_protocol.yml -n dvf_protocol
+    $ conda activate dvf_protocol
+    $ python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
+    ```
 
-The program will complete in about one minute. Upon successful
-completion, the following message should be displayed on the screen,
-indicating that DeepVirFinder has been installed correctly and the
-test has passed.
+    The program will complete in about one minute. Upon successful
+    completion, the following message should be displayed on the screen,
+    indicating that DeepVirFinder has been installed correctly and the
+    test has passed.
 
-> python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
->
-> Using CPU/GPU: running on CPU
->
-> 1\. Loading Models.
->
-> model directory /home/data/dvf_protocol/DeepVirFinder/models
->
-> 2\. Encoding and Predicting Sequences.
->
-> Processed 50 sequences...
->
-> Processed 100 sequences...
->
-> Processed 150 sequences...
->
-> Processed 200 sequences...
->
-> Processed 250 sequences...
->
-> Processed 300 sequences...
->
-> Processed 350 sequences...
->
-> Processed 400 sequences...
->
-> Processed 450 sequences...
->
-> Processed 500 sequences...
->
-> Processed 550 sequences...
->
-> Processed 600 sequences...
->
-> Processed 650 sequences...
->
-> Processed 700 sequences...
->
-> Processed 750 sequences...
->
-> Processed 800 sequences...
->
-> Processed 850 sequences...
->
-> Processed 900 sequences...
->
-> Processed 950 sequences...
->
-> Processed 1000 sequences...
->
-> 3\. Done. Thank you for using DeepVirFinder.
->
-> output in /home/data/
-> dvf_protocol/DeepVirFinder/test/CRC_meta.fa_gt300bp_dvfpred.txt
+    ```text
+    python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
+    
+    Using CPU/GPU: running on CPU
+    
+    1. Loading Models.
+    
+    model directory /home/data/dvf_protocol/DeepVirFinder/models
+    
+    2. Encoding and Predicting Sequences.
+    
+    Processed 50 sequences...
+    
+    Processed 100 sequences...
+    
+    Processed 150 sequences...
+    
+    Processed 200 sequences...
+    
+    Processed 250 sequences...
+    
+    Processed 300 sequences...
+    
+    Processed 350 sequences...
+    
+    Processed 400 sequences...
+    
+    Processed 450 sequences...
+    
+    Processed 500 sequences...
+    
+    Processed 550 sequences...
+    
+    Processed 600 sequences...
+    
+    Processed 650 sequences...
+    
+    Processed 700 sequences...
+    
+    Processed 750 sequences...
+    
+    Processed 800 sequences...
+    
+    Processed 850 sequences...
+    
+    Processed 900 sequences...
+    
+    Processed 950 sequences...
+    
+    Processed 1000 sequences...
+    
+    3. Done. Thank you for using DeepVirFinder.
+    
+    output in /home/data/
+    dvf_protocol/DeepVirFinder/test/CRC_meta.fa_gt300bp_dvfpred.txt
+    ```
 
 3.  After verifying that DeepVirFinder can be successfully run, users
     can analyze their metagenomic data by specifying the following
@@ -157,8 +160,9 @@ test has passed.
 
     (5) whether to enable GPU acceleration for the run (optional).
 
-> \$ python dvf.py -i your_metagenomic_file.fasta -o your_output -l 300
-> -c 16
+    ```bash
+    $ python dvf.py -i your_metagenomic_file.fasta -o your_output -l 300 -c 16
+    ```
 
 4.  Upon successful completion, users may examine the results in the
     output directory. The primary output file is a text file (.txt)
@@ -180,29 +184,27 @@ test has passed.
 
     (1) To install the package "qvalue" in R:
 
-> \> install.packages("BiocManager")
->
-> \> BiocManager::install("qvalue")
+    ```r
+    install.packages("BiocManager")
+    BiocManager::install("qvalue")
+    ```
   
-  (2) To compute the q-values, load the package and call the function
-  qvalue. For example,
+    (2) To compute the q-values, load the package and call the function
+    qvalue. For example,
 
-> \# load the package qvalue
->
-> \> library(qvalue)
->
-> \# read the prediction results
->
-> \> result \<- read.csv("./test/CRC_meta.fa_gt300bp_dvfpred.txt",
-> sep='\t')
->
-> \# estimate q-values (false discovery rates) based on p-values
->
-> \> result\$qvalue \<- qvalue(result\$pvalue)\$qvalues
->
-> \# sort sequences by q-value in ascending order
->
-> \> result\[order(result\$qvalue),\]
+    ```r
+    # load the package qvalue
+    library(qvalue)
+    
+    # read the prediction results
+    result <- read.csv("./test/CRC_meta.fa_gt300bp_dvfpred.txt", sep = "\t")
+    
+    # estimate q-values (false discovery rates) based on p-values
+    result$qvalue <- qvalue(result$pvalue)$qvalues
+    
+    # sort sequences by q-value in ascending order
+    result[order(result$qvalue), ]
+    ```
 
 6.  (Optional) To facilitate further filtering of prediction results, we
     provide a post-processing script extract_virus.py. This script
@@ -216,22 +218,24 @@ test has passed.
     ＞0.9 and a p-value ＜0.05, and generate a filtered FASTA file
     containing only those sequences predicted to be viral.
 
-> \$ python extract_virus.py -j ./test/CRC_meta.fa_gt300bp_dvfpred.txt
-> \\
->
-> -f ./test/CRC_meta.fa -o ./test/filter -s 0.9 -p 0.05
->
-> The screen output is as follows:
->
-> Reading prediction file...
->
-> Total: 1000, Passed: 90, Not passed: 910, Percent: 9.00%
->
-> Saving filtered IDs...
->
-> Filtering fasta...
->
-> Filtered 90 sequences. Output folder: ./test/filter
+    ```bash
+    $ python extract_virus.py -j ./test/CRC_meta.fa_gt300bp_dvfpred.txt \
+      -f ./test/CRC_meta.fa -o ./test/filter -s 0.9 -p 0.05
+    ```
+
+    The screen output is as follows:
+
+    ```text
+    Reading prediction file...
+    
+    Total: 1000, Passed: 90, Not passed: 910, Percent: 9.00%
+    
+    Saving filtered IDs...
+    
+    Filtering fasta...
+    
+    Filtered 90 sequences. Output folder: ./test/filter
+    ```
 
 7.  (Optional) We also provide a visualization script to comprehensively
     analyze all results. Users can employ the visualize.py script to (1)
@@ -240,8 +244,9 @@ test has passed.
     relative to the total sequence, and (4) identify the distributions
     of high-confidence/high-score sequences.
 
-> \$ python visualize.py -j ./test/CRC_meta.fa_gt300bp_dvfpred.txt -f
-> ./test/CRC_meta.fa -o ./test/filter -s 0.9 -p 0.05
+    ```bash
+    $ python visualize.py -j ./test/CRC_meta.fa_gt300bp_dvfpred.txt -f ./test/CRC_meta.fa -o ./test/filter -s 0.9 -p 0.05
+    ```
 
 **<span class="mark">Basic Protocol 2: AN INTEGRATED PIPELINE FOR VIRAL
 SEQUENCE ANALYSIS: PREDICTION, EXTRACTION, AND VISUALIZATION</span>**
@@ -288,8 +293,9 @@ files while maintaining the required input format (FASTA).
 
     \(6\) Threshold of *p*-values
 
-> \$ python pipeline.py -i ./test/TOV_43_sampled_80M.fna -o ./test/TOV
-> -l 1500 -c 16 --score 0.9 --pvalue 0.05
+    ```bash
+    $ python pipeline.py -i ./test/TOV_43_sampled_80M.fna -o ./test/TOV -l 1500 -c 16 --score 0.9 --pvalue 0.05
+    ```
 
 2.  Upon successful completion, users may examine the complete results
     in the output directory:
@@ -333,42 +339,41 @@ DeepVirFinder and dependencies as specified in Basic Protocol 1.
 
 1.  Running encode.py to encode the input files.
 
-This script is designed to segment input genomic sequences into
-fixed-length fragments and perform one-hot encoding for each fragment.
-The encoding results are separated into forward and reverse strands
-and are output as .npy files and .fasta files. The script encode.py
-processes the input genomic sequences by fragmenting them into
-fixed-length sequences \[-l\] and encoding them using the one-hot
-encoding scheme. The contig type \[-p\] indicates the type of the
-sequences, either virus or host. This indicator will be encoded into
-the file name and will be used in the following steps for data type
-recognition. Users can use the following command to encode viral and
-host genome files separately:
+    This script is designed to segment input genomic sequences into
+    fixed-length fragments and perform one-hot encoding for each fragment.
+    The encoding results are separated into forward and reverse strands
+    and are output as .npy files and .fasta files. The script encode.py
+    processes the input genomic sequences by fragmenting them into
+    fixed-length sequences \[-l\] and encoding them using the one-hot
+    encoding scheme. The contig type \[-p\] indicates the type of the
+    sequences, either virus or host. This indicator will be encoded into
+    the file name and will be used in the following steps for data type
+    recognition. Users can use the following command to encode viral and
+    host genome files separately:
 
-> \# for training
->
-> \$ python encode.py -i ./train_example/tr/host_tr.fa -l 150 -p host
->
-> \$ python encode.py -i ./train_example/tr/virus_tr.fa -l 150 -p virus
->
-> \# for validation
->
-> \$ python encode.py -i ./train_example/val/host_val.fa -l 150 -p host
->
-> \$ python encode.py -i ./train_example/val/virus_val.fa -l 150 -p
-> virus
+    ```bash
+    # for training
+    $ python encode.py -i ./train_example/tr/host_tr.fa -l 150 -p host
+    $ python encode.py -i ./train_example/tr/virus_tr.fa -l 150 -p virus
+    
+    # for validation
+    $ python encode.py -i ./train_example/val/host_val.fa -l 150 -p host
+    $ python encode.py -i ./train_example/val/virus_val.fa -l 150 -p virus
+    ```
 
     Part of the output is as follows,
 
-> Encoded sequences are saved in:
->
-> \- host#host_tr#0.15k_num1_seq19994_codefw.npy
->
-> \- host#host_tr#0.15k_num1_seq19994_codebw.npy
->
-> \- host#host_tr#0.15k_num1_seq19994.fasta
->
-> Total fragments processed: 19994
+    ```text
+    Encoded sequences are saved in:
+    
+    - host#host_tr#0.15k_num1_seq19994_codefw.npy
+    
+    - host#host_tr#0.15k_num1_seq19994_codebw.npy
+    
+    - host#host_tr#0.15k_num1_seq19994.fasta
+    
+    Total fragments processed: 19994
+    ```
 
 3.  Running training.py to train the new model with encoded custom
     datasets
@@ -388,78 +393,80 @@ host genome files separately:
     500, 1000 bp, for predicting sequences of different length ranges. The
     option \[-l\] specifies the length of the sequences used for training.
 
-> \$ python training.py -l 150 -i ./train_example/tr/encoded \\
->
-> -j ./train_example/val/encoded -o ./train_example/test_models \\
->
-> -f 10 -n 500 -d 500 -e 10
->
- Part of the output is as follows,
+    ```bash
+    $ python training.py -l 150 -i ./train_example/tr/encoded \
+      -j ./train_example/val/encoded -o ./train_example/test_models \
+      -f 10 -n 500 -d 500 -e 10
+    ```
 
-> ...loading data...
->
-> ...loading virus data...
->
-> data for training virus#virus_tr#0.15k_num1_seq20000_codefw.npy
->
-> data for validation virus#virus_val#0.15k_num1_seq2000_codefw.npy
->
-> ...loading host data...
->
-> data for training host#host_tr#0.15k_num1_seq19994_codefw.npy
->
-> data for validation host#host_val#0.15k_num1_seq1996_codefw.npy
->
-> ...combining V and H...
->
-> ...shuffling training data...
->
-> ...building model...
->
-> ...fitting model...
->
-> 0.15k_fl10_fn500_dn500_ep10
->
-> Epoch 1/10 - train_loss: 0.619883 val_loss: 0.586210 val_auc: 0.778823
->
-> Epoch 1: val_loss improved from nan to 0.586210, saving model to
-> ./train_example/models/model_siamese_varlen_0.15k_fl10_fn500_dn500.pth
->
-> Epoch 2/10 - train_loss: 0.579221 val_loss: 0.561745 val_auc: 0.786800
->
-> Epoch 2: val_loss improved from 0.586210 to 0.561745, saving model to
-> ./train_example/models/model_siamese_varlen_0.15k_fl10_fn500_dn500.pth
->
-> Epoch 3/10 - train_loss: 0.560137 val_loss: 0.580362 val_auc: 0.790158
->
-> Epoch 4/10 - train_loss: 0.541015 val_loss: 0.592850 val_auc: 0.786805
->
-> Epoch 5/10 - train_loss: 0.524401 val_loss: 0.558194 val_auc: 0.799774
->
-> Epoch 5: val_loss improved from 0.561745 to 0.558194, saving model to
-> ./train_example/models/model_siamese_varlen_0.15k_fl10_fn500_dn500.pth
->
-> Epoch 6/10 - train_loss: 0.506052 val_loss: 0.560106 val_auc: 0.804088
->
-> Epoch 7/10 - train_loss: 0.487972 val_loss: 0.561029 val_auc: 0.811139
->
-> Epoch 8/10 - train_loss: 0.472881 val_loss: 0.583559 val_auc: 0.801717
->
-> Epoch 9/10 - train_loss: 0.459005 val_loss: 0.592404 val_auc: 0.808126
->
-> Epoch 10/10 - train_loss: 0.446490 val_loss: 0.577975 val_auc:
-> 0.797927
->
-> ...predicting tr...
->
-> auc_tr=0.918028155946784
->
-> ...predicting val...
->
-> auc_val=0.7979273547094188
->
-> Model (best) is at
-> ./train_example/models/model_siamese_varlen_0.15k_fl10_fn500_dn500.pth
+    Part of the output is as follows,
+
+    ```text
+    ...loading data...
+    
+    ...loading virus data...
+    
+    data for training virus#virus_tr#0.15k_num1_seq20000_codefw.npy
+    
+    data for validation virus#virus_val#0.15k_num1_seq2000_codefw.npy
+    
+    ...loading host data...
+    
+    data for training host#host_tr#0.15k_num1_seq19994_codefw.npy
+    
+    data for validation host#host_val#0.15k_num1_seq1996_codefw.npy
+    
+    ...combining V and H...
+    
+    ...shuffling training data...
+    
+    ...building model...
+    
+    ...fitting model...
+    
+    0.15k_fl10_fn500_dn500_ep10
+    
+    Epoch 1/10 - train_loss: 0.619883 val_loss: 0.586210 val_auc: 0.778823
+    
+    Epoch 1: val_loss improved from nan to 0.586210, saving model to
+    ./train_example/models/model_siamese_varlen_0.15k_fl10_fn500_dn500.pth
+    
+    Epoch 2/10 - train_loss: 0.579221 val_loss: 0.561745 val_auc: 0.786800
+    
+    Epoch 2: val_loss improved from 0.586210 to 0.561745, saving model to
+    ./train_example/models/model_siamese_varlen_0.15k_fl10_fn500_dn500.pth
+    
+    Epoch 3/10 - train_loss: 0.560137 val_loss: 0.580362 val_auc: 0.790158
+    
+    Epoch 4/10 - train_loss: 0.541015 val_loss: 0.592850 val_auc: 0.786805
+    
+    Epoch 5/10 - train_loss: 0.524401 val_loss: 0.558194 val_auc: 0.799774
+    
+    Epoch 5: val_loss improved from 0.561745 to 0.558194, saving model to
+    ./train_example/models/model_siamese_varlen_0.15k_fl10_fn500_dn500.pth
+    
+    Epoch 6/10 - train_loss: 0.506052 val_loss: 0.560106 val_auc: 0.804088
+    
+    Epoch 7/10 - train_loss: 0.487972 val_loss: 0.561029 val_auc: 0.811139
+    
+    Epoch 8/10 - train_loss: 0.472881 val_loss: 0.583559 val_auc: 0.801717
+    
+    Epoch 9/10 - train_loss: 0.459005 val_loss: 0.592404 val_auc: 0.808126
+    
+    Epoch 10/10 - train_loss: 0.446490 val_loss: 0.577975 val_auc:
+    0.797927
+    
+    ...predicting tr...
+    
+    auc_tr=0.918028155946784
+    
+    ...predicting val...
+    
+    auc_val=0.7979273547094188
+    
+    Model (best) is at
+    ./train_example/models/model_siamese_varlen_0.15k_fl10_fn500_dn500.pth
+    ```
 
 The following section demonstrates a complete test workflow. If you
 need to train your own model, you should first divide the sequence
@@ -468,45 +475,34 @@ and then train the model. We strongly recommend using a GPU-equipped
 machine for training.
 
 
-> \# Fragmenting sequences into fixed lengths, and encoding them using
-> one-hot encoding (may take about 5 minutes)
->
-> for l in 150 300 500 1000; do
->
-> \# for training
->
-> python encode.py -i ./train_example/tr/host_tr.fa -l \$l -p host
->
-> python encode.py -i ./train_example/tr/virus_tr.fa -l \$l -p virus
->
-> \# for validation
->
-> python encode.py -i ./train_example/val/host_val.fa -l \$l -p host
->
-> python encode.py -i ./train_example/val/virus_val.fa -l \$l -p virus
->
-> done
->
-> \# Training multiple models for different contig lengths
->
-> for l in 150 300 500 1000; do
->
-> python training.py -l \$l -i ./train_example/tr/encoded \\
->
-> -j ./train_example/val/encoded \\
->
-> -o ./train_example/new_models \\
->
-> -f 10 -n 500 -d 500 -e 10
->
-> done
+```bash
+# Fragmenting sequences into fixed lengths, and encoding them using one-hot encoding (may take about 5 minutes)
+for l in 150 300 500 1000; do
+  # for training
+  python encode.py -i ./train_example/tr/host_tr.fa -l $l -p host
+  python encode.py -i ./train_example/tr/virus_tr.fa -l $l -p virus
+
+  # for validation
+  python encode.py -i ./train_example/val/host_val.fa -l $l -p host
+  python encode.py -i ./train_example/val/virus_val.fa -l $l -p virus
+done
+
+# Training multiple models for different contig lengths
+for l in 150 300 500 1000; do
+  python training.py -l $l -i ./train_example/tr/encoded \
+    -j ./train_example/val/encoded \
+    -o ./train_example/new_models \
+    -f 10 -n 500 -d 500 -e 10
+done
+```
 
 4.  Using the new model to predict your metagenomic files.
 
     To predict sequences using the newly trained model, specify the model
     directory using the option -m,
->
-> python dvf.py -i ./test/crAssphage.fa -o ./train_example/test \\
->
-> -l 300 -m ./train_example/new_models
+
+    ```bash
+    $ python dvf.py -i ./test/crAssphage.fa -o ./train_example/test \
+      -l 300 -m ./train_example/new_models
+    ```
 
