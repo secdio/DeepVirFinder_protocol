@@ -4,7 +4,7 @@ Version: 1.2
 
 Authors: Yuqian Mo, Nathan Ahlgren, Jed A. Fuhrman, Fengzhu Sun, Shengwei Hou
 
-Maintainer: Yuqian Mo, Jie Ren renj@usc.edu, Chao Deng chaodeng@usc.edu
+Maintainer: Yuqian Mo 12432780@mail.sustech.edu.cn, Jie Ren renj@usc.edu, Chao Deng chaodeng@usc.edu
 
 
 ## Description
