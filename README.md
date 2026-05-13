@@ -184,8 +184,8 @@ test has passed.
 >
 > \> BiocManager::install("qvalue")
   
-    (2) To compute the q-values, load the package and call the function
-qvalue. For example,
+  (2) To compute the q-values, load the package and call the function
+  qvalue. For example,
 
 > \# load the package qvalue
 >
