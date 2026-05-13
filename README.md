@@ -83,10 +83,10 @@ format.
 >
 > \$ python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
 >
-The program will complete in about one minute. Upon successful
-completion, the following message should be displayed on the screen,
-indicating that DeepVirFinder has been installed correctly and the
-test has passed.
+   The program will complete in about one minute. Upon successful
+   completion, the following message should be displayed on the screen,
+   indicating that DeepVirFinder has been installed correctly and the
+   test has passed.
 >
 > python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
 >
@@ -147,17 +147,16 @@ test has passed.
     can analyze their metagenomic data by specifying the following
     parameters:
 
-> \(1\) a fasta file (mandatory, see Table 1);
->
-> \(2\) an output directory (optional, see Table 2);
->
-> \(3\) a sequence length cutoff for filtering (optional, see Table 2);
->
-> \(4\) the number of CPU cores (optional, see Table 2).
->
-> \(5\) whether to enable GPU acceleration for the run (optional, see
-> Table 2).
->
+    \(1\) a fasta file (mandatory);
+
+    \(2\) an output directory (optional);
+
+    \(3\) a sequence length cutoff for filtering (optional);
+
+    \(4\) the number of CPU cores (optional).
+
+    \(5\) whether to enable GPU acceleration for the run (optional).
+
 > \$ python dvf.py -i your_metagenomic_file.fasta -o your_output -l 300
 > -c 16
 
@@ -167,13 +166,13 @@ test has passed.
 
 <!-- -->
 
-\(1\) Sequence identifier
+   \(1\) Sequence identifier
 
-\(2\) Sequence length
+   \(2\) Sequence length
 
-\(3\)  Predicted viral score (0-1)
+   \(3\)  Predicted viral score (0-1)
 
-\(4\)  Calculated *p*-value (0-1)
+   \(4\)  Calculated *p*-value (0-1)
 
 5.  (Optional) To enhance the statistical rigor of viral sequence
     identification, we recommend calculating *q*-values for false
@@ -183,13 +182,13 @@ test has passed.
 
 <!-- -->
 
-1)  To install the package "qvalue" in R:
+\(1\)  To install the package "qvalue" in R:
 
 > \> install.packages("BiocManager")
 >
 > \> BiocManager::install("qvalue")
 
-2)  To compute the *q*-values, load the package and call the function
+\(2\) To compute the *q*-values, load the package and call the function
     'qvalue'. For example,
 
 > \# load the package qvalue
@@ -214,12 +213,12 @@ test has passed.
     allows users to extract sequences identified as viral by
     DeepVirFinder based on user-defined score and *p*-value thresholds.
 
-To run the script, the user needs to provide the DeepVirFinder output
-file, the original metagenomic FASTA file, and the desired filtering
-thresholds for the score and *p*-value fields. The script will then
-extract sequences that meet the specified criteria, such as a score
-＞0.9 and a p-value ＜0.05, and generate a filtered FASTA file
-containing only those sequences predicted to be viral.
+    To run the script, the user needs to provide the DeepVirFinder output
+    file, the original metagenomic FASTA file, and the desired filtering
+    thresholds for the score and *p*-value fields. The script will then
+    extract sequences that meet the specified criteria, such as a score
+    ＞0.9 and a p-value ＜0.05, and generate a filtered FASTA file
+    containing only those sequences predicted to be viral.
 
 > \$ python extract_virus.py -j ./test/CRC_meta.fa_gt300bp_dvfpred.txt
 > \\
@@ -283,17 +282,17 @@ files while maintaining the required input format (FASTA).
 
 <!-- -->
 
-\(1\)  Input fasta files
+    \(1\)  Input fasta files
 
-\(2\) Output directory
+    \(2\) Output directory
 
-\(3\) Cutoff length
+    \(3\) Cutoff length
 
-\(4\)  Number of cores
+    \(4\)  Number of cores
 
-\(5\) Threshold of scores
+    \(5\) Threshold of scores
 
-\(6\) Threshold of *p*-values
+    \(6\) Threshold of *p*-values
 
 > \$ python pipeline.py -i ./test/TOV_43_sampled_80M.fna -o ./test/TOV
 > -l 1500 -c 16 --score 0.9 --pvalue 0.05
@@ -303,13 +302,13 @@ files while maintaining the required input format (FASTA).
 
 <!-- -->
 
-\(1\) Prediction Results from dvf.py
+    \(1\) Prediction Results from dvf.py
 
-\(2\)  Filtered Viral Sequences
+    \(2\)  Filtered Viral Sequences
 
-\(3\)  Viral Sequence IDs
+    \(3\)  Viral Sequence IDs
 
-\(4\) Visualization Outputs
+    \(4\) Visualization Outputs
 
 **<span class="mark">Basic Protocol 3：RETRAINING THE DeepVirFinder
 MODEL USING A CUSTOMIZED DATASET</span>**
@@ -366,8 +365,8 @@ host genome files separately:
 > \$ python encode.py -i ./train_example/val/virus_val.fa -l 150 -p
 > virus
 
-> Part of the output is as follows,
->
+ Part of the output is as follows,
+
 > Encoded sequences are saved in:
 >
 > \- host#host_tr#0.15k_num1_seq19994_codefw.npy
@@ -381,20 +380,20 @@ host genome files separately:
 3.  Running training.py to train the new model with encoded custom
     datasets
 
-The script training.py takes the encoded sequences and trains a deep
-learning model for classifying viruses from hosts. We strongly
-recommend using a GPU for this step; otherwise, the runtime may be
-significantly prolonged.
+    The script training.py takes the encoded sequences and trains a deep
+    learning model for classifying viruses from hosts. We strongly
+    recommend using a GPU for this step; otherwise, the runtime may be
+    significantly prolonged.
 
-The directory of the encoded training data \[-i\] and the directory of
-the encoded validation data \[-j\] need to be specified.
-Hyperparameters of the deep learning model include the number of
-filters in the convolutional layer \[-n\], the length of the filter
-\[-f\], and the number of neurons in the dense layer \[-d\]. Since
-viral sequences in real data can be of various lengths, we train
-multiple models using sequences of different lengths, e.g., 150, 300,
-500, 1000 bp, for predicting sequences of different length ranges. The
-option \[-l\] specifies the length of the sequences used for training.
+    The directory of the encoded training data \[-i\] and the directory of
+    the encoded validation data \[-j\] need to be specified.
+    Hyperparameters of the deep learning model include the number of
+    filters in the convolutional layer \[-n\], the length of the filter
+    \[-f\], and the number of neurons in the dense layer \[-d\]. Since
+    viral sequences in real data can be of various lengths, we train
+    multiple models using sequences of different lengths, e.g., 150, 300,
+    500, 1000 bp, for predicting sequences of different length ranges. The
+    option \[-l\] specifies the length of the sequences used for training.
 
 > \$ python training.py -l 150 -i ./train_example/tr/encoded \\
 >
@@ -402,8 +401,8 @@ option \[-l\] specifies the length of the sequences used for training.
 >
 > -f 10 -n 500 -d 500 -e 10
 >
-> Part of the output is as follows,
->
+ Part of the output is as follows,
+
 > ...loading data...
 >
 > ...loading virus data...
@@ -469,11 +468,11 @@ option \[-l\] specifies the length of the sequences used for training.
 > Model (best) is at
 > ./train_example/models/model_siamese_varlen_0.15k_fl10_fn500_dn500.pth
 >
-The following section demonstrates a complete test workflow. If you
-need to train your own model, you should first divide the sequence
-into fixed lengths in base pairs (such as 150, 300, 500, 1000, etc.)
-and then train the model. We strongly recommend using a GPU-equipped
-machine for training.
+    The following section demonstrates a complete test workflow. If you
+    need to train your own model, you should first divide the sequence
+    into fixed lengths in base pairs (such as 150, 300, 500, 1000, etc.)
+    and then train the model. We strongly recommend using a GPU-equipped
+    machine for training.
 
 
 > \# Fragmenting sequences into fixed lengths, and encoding them using
@@ -511,8 +510,8 @@ machine for training.
 
 4.  Using the new model to predict your metagenomic files.
 
-To predict sequences using the newly trained model, specify the model
-directory using the option -m,
+    To predict sequences using the newly trained model, specify the model
+    directory using the option -m,
 >
 > python dvf.py -i ./test/crAssphage.fa -o ./train_example/test \\
 >
