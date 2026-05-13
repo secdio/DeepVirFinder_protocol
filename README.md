@@ -84,9 +84,9 @@ format.
 > \$ python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
 
     The program will complete in about one minute. Upon successful
-   completion, the following message should be displayed on the screen,
-   indicating that DeepVirFinder has been installed correctly and the
-   test has passed.
+    completion, the following message should be displayed on the screen,
+    indicating that DeepVirFinder has been installed correctly and the
+    test has passed.
 
 > python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
 >
@@ -184,7 +184,7 @@ format.
 >
 > \> BiocManager::install("qvalue")
 
-   \(2\) To compute the *q*-values, load the package and call the function
+    \(2\) To compute the *q*-values, load the package and call the function
     'qvalue'. For example,
 
 > \# load the package qvalue
@@ -317,7 +317,7 @@ data and retraining the model.
 DeepVirFinder compatible Linux machine meeting the minimum hardware
 requirements as specified in Basic Protocol 1.
 
-2.  **Software**
+**B. Software**
 
 DeepVirFinder and dependencies as specified in Basic Protocol 1.
 
@@ -333,17 +333,17 @@ DeepVirFinder and dependencies as specified in Basic Protocol 1.
 
 1.  Running encode.py to encode the input files.
 
-This script is designed to segment input genomic sequences into
-fixed-length fragments and perform one-hot encoding for each fragment.
-The encoding results are separated into forward and reverse strands
-and are output as .npy files and .fasta files. The script encode.py
-processes the input genomic sequences by fragmenting them into
-fixed-length sequences \[-l\] and encoding them using the one-hot
-encoding scheme. The contig type \[-p\] indicates the type of the
-sequences, either virus or host. This indicator will be encoded into
-the file name and will be used in the following steps for data type
-recognition. Users can use the following command to encode viral and
-host genome files separately:
+    This script is designed to segment input genomic sequences into
+    fixed-length fragments and perform one-hot encoding for each fragment.
+    The encoding results are separated into forward and reverse strands
+    and are output as .npy files and .fasta files. The script encode.py
+    processes the input genomic sequences by fragmenting them into
+    fixed-length sequences \[-l\] and encoding them using the one-hot
+    encoding scheme. The contig type \[-p\] indicates the type of the
+    sequences, either virus or host. This indicator will be encoded into
+    the file name and will be used in the following steps for data type
+    recognition. Users can use the following command to encode viral and
+    host genome files separately:
 
 > \# for training
 >
@@ -461,11 +461,11 @@ host genome files separately:
 > Model (best) is at
 > ./train_example/models/model_siamese_varlen_0.15k_fl10_fn500_dn500.pth
 
-   The following section demonstrates a complete test workflow. If you
-   need to train your own model, you should first divide the sequence
-   into fixed lengths in base pairs (such as 150, 300, 500, 1000, etc.)
-   and then train the model. We strongly recommend using a GPU-equipped
-   machine for training.
+    The following section demonstrates a complete test workflow. If you
+    need to train your own model, you should first divide the sequence
+    into fixed lengths in base pairs (such as 150, 300, 500, 1000, etc.)
+    and then train the model. We strongly recommend using a GPU-equipped
+    machine for training.
 
 
 > \# Fragmenting sequences into fixed lengths, and encoding them using
