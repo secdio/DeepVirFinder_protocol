@@ -166,7 +166,7 @@ format.
 
 4.  Upon successful completion, users may examine the results in the
     output directory. The primary output file is a text file (.txt)
-    structured as described in Table 3, containing the following fields:
+   , containing the following fields:
 
     (1) Sequence identifier
 
