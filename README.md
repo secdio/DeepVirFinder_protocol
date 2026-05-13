@@ -82,11 +82,11 @@ format.
 > \$ conda activate dvf_protocol
 >
 > \$ python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
->
-   The program will complete in about one minute. Upon successful
-   completion, the following message should be displayed on the screen,
-   indicating that DeepVirFinder has been installed correctly and the
-   test has passed.
+
+    The program will complete in about one minute. Upon successful
+    completion, the following message should be displayed on the screen,
+    indicating that DeepVirFinder has been installed correctly and the
+    test has passed.
 >
 > python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
 >
@@ -166,13 +166,13 @@ format.
 
 <!-- -->
 
-   \(1\) Sequence identifier
+    \(1\) Sequence identifier
 
-   \(2\) Sequence length
+    \(2\) Sequence length
 
-   \(3\)  Predicted viral score (0-1)
+    \(3\) Predicted viral score (0-1)
 
-   \(4\)  Calculated *p*-value (0-1)
+    \(4\) Calculated *p*-value (0-1)
 
 5.  (Optional) To enhance the statistical rigor of viral sequence
     identification, we recommend calculating *q*-values for false
@@ -182,13 +182,13 @@ format.
 
 <!-- -->
 
-\(1\)  To install the package "qvalue" in R:
+    \(1\)  To install the package "qvalue" in R:
 
 > \> install.packages("BiocManager")
 >
 > \> BiocManager::install("qvalue")
 
-\(2\) To compute the *q*-values, load the package and call the function
+    \(2\) To compute the *q*-values, load the package and call the function
     'qvalue'. For example,
 
 > \# load the package qvalue
@@ -280,8 +280,6 @@ files while maintaining the required input format (FASTA).
 1.  Users can run the pipeline script with the following command,
     specifying the required parameters:
 
-<!-- -->
-
     \(1\)  Input fasta files
 
     \(2\) Output directory
@@ -300,7 +298,6 @@ files while maintaining the required input format (FASTA).
 2.  Upon successful completion, users may examine the complete results
     in the output directory:
 
-<!-- -->
 
     \(1\) Prediction Results from dvf.py
 
@@ -365,7 +362,7 @@ host genome files separately:
 > \$ python encode.py -i ./train_example/val/virus_val.fa -l 150 -p
 > virus
 
- Part of the output is as follows,
+     Part of the output is as follows,
 
 > Encoded sequences are saved in:
 >
@@ -467,7 +464,7 @@ host genome files separately:
 >
 > Model (best) is at
 > ./train_example/models/model_siamese_varlen_0.15k_fl10_fn500_dn500.pth
->
+
     The following section demonstrates a complete test workflow. If you
     need to train your own model, you should first divide the sequence
     into fixed lengths in base pairs (such as 150, 300, 500, 1000, etc.)
