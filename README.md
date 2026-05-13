@@ -83,10 +83,10 @@ format.
 >
 > \$ python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
 
-   The program will complete in about one minute. Upon successful
-   completion, the following message should be displayed on the screen,
-   indicating that DeepVirFinder has been installed correctly and the
-   test has passed.
+The program will complete in about one minute. Upon successful
+completion, the following message should be displayed on the screen,
+indicating that DeepVirFinder has been installed correctly and the
+test has passed.
 
 > python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
 >
@@ -147,15 +147,15 @@ format.
     can analyze their metagenomic data by specifying the following
     parameters:
 
-    \(1\) a fasta file (mandatory);
+    (1) a fasta file (mandatory);
 
-    \(2\) an output directory (optional);
+    (2) an output directory (optional);
 
-    \(3\) a sequence length cutoff for filtering (optional);
+    (3) a sequence length cutoff for filtering (optional);
 
-    \(4\) the number of CPU cores (optional).
+    (4) the number of CPU cores (optional).
 
-    \(5\) whether to enable GPU acceleration for the run (optional).
+    (5) whether to enable GPU acceleration for the run (optional).
 
 > \$ python dvf.py -i your_metagenomic_file.fasta -o your_output -l 300
 > -c 16
@@ -164,28 +164,28 @@ format.
     output directory. The primary output file is a text file (.txt)
     structured as described in Table 3, containing the following fields:
 
-    \(1\) Sequence identifier
+    (1) Sequence identifier
 
-    \(2\) Sequence length
+    (2) Sequence length
 
-    \(3\) Predicted viral score (0-1)
+    (3) Predicted viral score (0-1)
 
-    \(4\) Calculated *p*-value (0-1)
+    (4) Calculated p-value (0-1)
 
 5.  (Optional) To enhance the statistical rigor of viral sequence
-    identification, we recommend calculating *q*-values for false
+    identification, we recommend calculating q-values for false
     discovery rate (FDR) control as a more conservative metric than
-    *p*-values. Users can compute *q*-values using the R package as
+    p-values. Users can compute q-values using the R package as
     follows:
 
-    \(1\)  To install the package "qvalue" in R:
+    (1) To install the package "qvalue" in R:
 
 > \> install.packages("BiocManager")
 >
 > \> BiocManager::install("qvalue")
 
-     \(2\) To compute the *q*-values, load the package and call the function
-    'qvalue'. For example,
+(2) To compute the q-values, load the package and call the function
+qvalue. For example,
 
 > \# load the package qvalue
 >
@@ -207,11 +207,11 @@ format.
 6.  (Optional) To facilitate further filtering of prediction results, we
     provide a post-processing script extract_virus.py. This script
     allows users to extract sequences identified as viral by
-    DeepVirFinder based on user-defined score and *p*-value thresholds.
+    DeepVirFinder based on user-defined score and p-value thresholds.
 
     To run the script, the user needs to provide the DeepVirFinder output
     file, the original metagenomic FASTA file, and the desired filtering
-    thresholds for the score and *p*-value fields. The script will then
+    thresholds for the score and p-value fields. The script will then
     extract sequences that meet the specified criteria, such as a score
     ＞0.9 and a p-value ＜0.05, and generate a filtered FASTA file
     containing only those sequences predicted to be viral.
@@ -317,7 +317,7 @@ data and retraining the model.
 DeepVirFinder compatible Linux machine meeting the minimum hardware
 requirements as specified in Basic Protocol 1.
 
-**B. Software**
+2.  **Software**
 
 DeepVirFinder and dependencies as specified in Basic Protocol 1.
 
@@ -333,17 +333,17 @@ DeepVirFinder and dependencies as specified in Basic Protocol 1.
 
 1.  Running encode.py to encode the input files.
 
-    This script is designed to segment input genomic sequences into
-    fixed-length fragments and perform one-hot encoding for each fragment.
-    The encoding results are separated into forward and reverse strands
-    and are output as .npy files and .fasta files. The script encode.py
-    processes the input genomic sequences by fragmenting them into
-    fixed-length sequences \[-l\] and encoding them using the one-hot
-    encoding scheme. The contig type \[-p\] indicates the type of the
-    sequences, either virus or host. This indicator will be encoded into
-    the file name and will be used in the following steps for data type
-    recognition. Users can use the following command to encode viral and
-    host genome files separately:
+This script is designed to segment input genomic sequences into
+fixed-length fragments and perform one-hot encoding for each fragment.
+The encoding results are separated into forward and reverse strands
+and are output as .npy files and .fasta files. The script encode.py
+processes the input genomic sequences by fragmenting them into
+fixed-length sequences \[-l\] and encoding them using the one-hot
+encoding scheme. The contig type \[-p\] indicates the type of the
+sequences, either virus or host. This indicator will be encoded into
+the file name and will be used in the following steps for data type
+recognition. Users can use the following command to encode viral and
+host genome files separately:
 
 > \# for training
 >
@@ -358,7 +358,7 @@ DeepVirFinder and dependencies as specified in Basic Protocol 1.
 > \$ python encode.py -i ./train_example/val/virus_val.fa -l 150 -p
 > virus
 
-     Part of the output is as follows,
+    Part of the output is as follows,
 
 > Encoded sequences are saved in:
 >
@@ -461,11 +461,11 @@ DeepVirFinder and dependencies as specified in Basic Protocol 1.
 > Model (best) is at
 > ./train_example/models/model_siamese_varlen_0.15k_fl10_fn500_dn500.pth
 
-     The following section demonstrates a complete test workflow. If you
-     need to train your own model, you should first divide the sequence
-     into fixed lengths in base pairs (such as 150, 300, 500, 1000, etc.)
-     and then train the model. We strongly recommend using a GPU-equipped
-     machine for training.
+The following section demonstrates a complete test workflow. If you
+need to train your own model, you should first divide the sequence
+into fixed lengths in base pairs (such as 150, 300, 500, 1000, etc.)
+and then train the model. We strongly recommend using a GPU-equipped
+machine for training.
 
 
 > \# Fragmenting sequences into fixed lengths, and encoding them using
