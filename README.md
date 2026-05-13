@@ -323,7 +323,7 @@ data and retraining the model.
 DeepVirFinder compatible Linux machine meeting the minimum hardware
 requirements as specified in Basic Protocol 1.
 
-2.  **Software**
+**B. Software**
 
 DeepVirFinder and dependencies as specified in Basic Protocol 1.
 
