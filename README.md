@@ -83,10 +83,10 @@ format.
 >
 > \$ python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
 
-    The program will complete in about one minute. Upon successful
-    completion, the following message should be displayed on the screen,
-    indicating that DeepVirFinder has been installed correctly and the
-    test has passed.
+   The program will complete in about one minute. Upon successful
+   completion, the following message should be displayed on the screen,
+   indicating that DeepVirFinder has been installed correctly and the
+   test has passed.
 
 > python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
 >
