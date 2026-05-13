@@ -83,10 +83,10 @@ format.
 >
 > \$ python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
 
-    The program will complete in about one minute. Upon successful
-    completion, the following message should be displayed on the screen,
-    indicating that DeepVirFinder has been installed correctly and the
-    test has passed.
+     The program will complete in about one minute. Upon successful
+     completion, the following message should be displayed on the screen,
+     indicating that DeepVirFinder has been installed correctly and the
+     test has passed.
 
 > python dvf.py -i ./test/CRC_meta.fa -o ./test/ -l 300 -c 16
 >
@@ -184,7 +184,7 @@ format.
 >
 > \> BiocManager::install("qvalue")
 
-    \(2\) To compute the *q*-values, load the package and call the function
+     \(2\) To compute the *q*-values, load the package and call the function
     'qvalue'. For example,
 
 > \# load the package qvalue
@@ -358,7 +358,7 @@ DeepVirFinder and dependencies as specified in Basic Protocol 1.
 > \$ python encode.py -i ./train_example/val/virus_val.fa -l 150 -p
 > virus
 
-    Part of the output is as follows,
+     Part of the output is as follows,
 
 > Encoded sequences are saved in:
 >
@@ -461,11 +461,11 @@ DeepVirFinder and dependencies as specified in Basic Protocol 1.
 > Model (best) is at
 > ./train_example/models/model_siamese_varlen_0.15k_fl10_fn500_dn500.pth
 
-    The following section demonstrates a complete test workflow. If you
-    need to train your own model, you should first divide the sequence
-    into fixed lengths in base pairs (such as 150, 300, 500, 1000, etc.)
-    and then train the model. We strongly recommend using a GPU-equipped
-    machine for training.
+     The following section demonstrates a complete test workflow. If you
+     need to train your own model, you should first divide the sequence
+     into fixed lengths in base pairs (such as 150, 300, 500, 1000, etc.)
+     and then train the model. We strongly recommend using a GPU-equipped
+     machine for training.
 
 
 > \# Fragmenting sequences into fixed lengths, and encoding them using
