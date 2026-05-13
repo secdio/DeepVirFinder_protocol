@@ -41,8 +41,7 @@ METAGENOMIC ASSEMBLIES</span>**
 Here, we provide a detailed workflow for predicting viral sequences in
 metagenomic assemblies using DeepVirFinder, including the preparation of
 dependencies, testing the installation, and demonstrating the complete
-viral sequence prediction pipeline using the *Tara* Oceans viromic
-dataset as a case study.
+viral sequence prediction pipeline.
 
 **<span class="mark">Required Resources</span>**
 
